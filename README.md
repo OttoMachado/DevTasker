@@ -27,8 +27,8 @@ O projeto **DevTasker** consiste em um sistema voltado para a **gestão de taref
 #### Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repo.git
-cd seu-repo
+git clone https://github.com/OttoMachado/DevTasker.git
+cd DevTasker
 ```
 
 #### Inicie o servidor:
