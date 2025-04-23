@@ -3,21 +3,27 @@ import { User } from "./User";
 
 @Entity()
 export class Tasks {
+  //Cria o ID
   @PrimaryGeneratedColumn()
   id!: number;
 
+  //Cria Titulo 
   @Column({ type: "varchar", length: 100, nullable: false })
   title: string;
 
+  //Cria descrição
   @Column({ type: "varchar", length: 100, nullable: false })
   description: string;
 
+  //Cria Status
   @Column({ type: "varchar", length: 30, nullable: false })
   status: string;
 
+  //Cria Data de entrega
   @Column({ type: "varchar", length: 50, nullable: false })
   deliverydate: string;
 
+  //Coluna pro ID do user
   @Column({ type: "int", length: 50, nullable: false })
   userid: number;
 
