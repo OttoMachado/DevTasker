@@ -1,19 +1,14 @@
-import "reflect-metadata";
 import { DataSource } from "typeorm";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const {DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME} = process.env;
+import 'dotenv/config';
 
 export const AppDataSource = new DataSource({
-  type: "mysql",
-  host: DB_HOST,
-  port: Number(DB_PORT),
-  username: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
-  entities: ["src/models/*.ts"],
-  synchronize: true,
-  logging: false,
+    type: "mysql",
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT || "3306"),
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    entities: ["src/models/*.ts"],
+    synchronize: true,
+    logging: true
 });
