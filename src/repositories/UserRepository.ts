@@ -16,7 +16,7 @@ export class UserRepository {
   }
 
   async findUserById(id: number) {
-    return await this.repo.findOne({ where: { id }, relations: ["orders", "favoriteDishes"] });
+    return await this.repo.findOne({where: { id }});
   }
 
   async updateUser(id: number, fields: Partial<User>) {
@@ -33,6 +33,6 @@ export class UserRepository {
   }
 
   async findAllUsers() {
-    return await this.repo.find({ relations: ["orders", "favoriteDishes"] });
+    return await this.repo.find();
   }
 }
