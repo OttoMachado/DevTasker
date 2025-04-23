@@ -4,7 +4,6 @@ O projeto **DevTasker** consiste em um sistema voltado para a **gestão de taref
 
 #### Funcionalidades:
 - Registro de novos usuários com validações
-- Autenticação via JWT
 - Consulta, atualização e remoção de usuários
 - Proteção de rotas por middleware de autenticação
 
