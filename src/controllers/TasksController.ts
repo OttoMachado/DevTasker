@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { TaskRepository } from "../repositories/TasksRepository";
+import { TaskRepository } from "../repositories/TasksRepositories";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
 
 const repo = new TaskRepository();
 
 export class TasksController {
-    
-    //Cria tarefa nova
+
+  //Cria tarefa nova
   static async create(req: Request, res: Response) {
     try {
       const { title, description, status, deliveryDate, userId } = req.body;
@@ -33,11 +33,16 @@ export class TasksController {
     try {
       const id = parseInt(req.params.id);
       const task = await repo.findTaskById(id);
-      if (!task) return res.status(404).json({ message: "Tarefa não encontrada." });
+      if (!task) {
+        res.status(404).json({ message: "Tarefa não encontrada." })
+        return;
+      }
 
       res.json(task);
+      return;
     } catch (error) {
       res.status(500).json({ message: "Erro ao buscar tarefa", details: error });
+      return;
     }
   }
 
@@ -47,6 +52,7 @@ export class TasksController {
       const userId = parseInt(req.params.userId);
       const tasks = await repo.findTasksByUserId(userId);
       res.json(tasks);
+      return;
     } catch (error) {
       res.status(500).json({ message: "Erro ao buscar tarefas do usuário", details: error });
     }
@@ -61,23 +67,28 @@ export class TasksController {
       const fieldsToUpdate = { title, description, status, deliveryDate, userId };
       const updated = await repo.updateTask(id, fieldsToUpdate);
 
-      if (!updated) return res.status(404).json({ message: "Tarefa não encontrada." });
-
+      if (!updated) {
+        res.status(404).json({ message: "Tarefa não encontrada." });
+        return
+      }
       res.json({ message: "Tarefa atualizada com sucesso.", updated });
     } catch (error) {
       res.status(500).json({ message: "Erro ao atualizar tarefa", details: error });
     }
   }
 
-//Metodo pra deletar a tarefa
+  //Metodo pra deletar a tarefa
   static async delete(req: Request, res: Response) {
     try {
-        //pega o id da tarefa q vai apagar
+      //pega o id da tarefa q vai apagar
       const id = parseInt(req.params.id);
       const deleted = await repo.deleteTask(id);
 
       // esse é pra caso nao tenha achado a tarefa
-      if (!deleted) return res.status(404).json({ message: "Tarefa não encontrada." });
+      if (!deleted) {
+        res.status(404).json({ message: "Tarefa não encontrada." });
+        return;
+      }
 
       res.json({ message: "Tarefa deletada com sucesso." });
     } catch (error) {

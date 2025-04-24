@@ -7,15 +7,18 @@ const repo = new UserRepository();
 
 export class UserController {
 
- 
+
   static async register(req: Request, res: Response) {
     try {
-      const { name, email, password, phone} = req.body;
+      const { name, email, password } = req.body;
 
       const existing = await repo.findUserByEmail(email);
-      if (existing) return res.status(400).json({ message: "Email já em uso." });
+      if (existing) {
+        res.status(400).json({ message: "Email já em uso." })
+        return
+      };
 
-      const user = await repo.createUser(name, email, password, phone);
+      const user = await repo.createUser(name, email, password);
       res.status(201).json(user);
     } catch (error) {
       res.status(500).json({ error: "Erro ao registrar usuário", details: error });
@@ -27,10 +30,16 @@ export class UserController {
       const { email, password } = req.body;
 
       const user = await repo.findUserByEmail(email);
-      if (!user) return res.status(404).json({ message: "Usuário não encontrado." });
+      if (!user) {
+        res.status(404).json({ message: "Usuário não encontrado." });
+        return;
+      }
 
       const isValid = await bcrypt.compare(password, user.password);
-      if (!isValid) return res.status(401).json({ message: "Senha inválida." });
+      if (!isValid) {
+        res.status(401).json({ message: "Senha inválida." });
+        return;
+      }
 
       const token = geraToken({ id: user.id, email: user.email });
 
@@ -53,7 +62,10 @@ export class UserController {
     try {
       const id = parseInt(req.params.id);
       const user = await repo.findUserById(id);
-      if (!user) return res.status(404).json({ message: "Usuário não encontrado." });
+      if (!user) {
+        res.status(404).json({ message: "Usuário não encontrado." });
+        return;
+      }
 
       res.json(user);
     } catch (error) {
@@ -69,7 +81,10 @@ export class UserController {
       const fieldsToUpdate = { name, email, password, phone, role };
       const updated = await repo.updateUser(id, fieldsToUpdate);
 
-      if (!updated) return res.status(404).json({ message: "Usuário não encontrado." });
+      if (!updated) {
+        res.status(404).json({ message: "Usuário não encontrado." });
+        return;
+      }
 
       res.json({ message: "Usuário atualizado com sucesso.", updated });
     } catch (error) {
@@ -82,7 +97,10 @@ export class UserController {
       const id = parseInt(req.params.id);
       const deleted = await repo.deleteUser(id);
 
-      if (!deleted) return res.status(404).json({ message: "Usuário não encontrado." });
+      if (!deleted) {
+        res.status(404).json({ message: "Usuário não encontrado." });
+        return;
+      }
 
       res.json({ message: "Usuário deletado com sucesso." });
     } catch (error) {

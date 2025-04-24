@@ -23,10 +23,6 @@ export class Tasks {
   @Column({ type: "varchar", length: 50, nullable: false })
   deliverydate: string;
 
-  //Coluna pro ID do user
-  @Column({ type: "int", length: 50, nullable: false })
-  userid: number;
-
   @ManyToOne(() => User) //relação ManyToOne com a entidade User, o parametro ta dizendo qual a entidade q vai ser relacionada.
   @JoinColumn({ name: "userid"})  //isso aqui define qual coluna da tabela vai ser a chave estrangeira.
   user: User;
@@ -38,6 +34,5 @@ export class Tasks {
     this.description = description;
     this.status = status;
     this.deliverydate = deliverydate;
-    this.userid = userid;
   }
 }

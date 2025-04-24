@@ -5,8 +5,8 @@ import { User } from "../models/User";
 export class UserRepository {
   private repo = AppDataSource.getRepository(User);
 
-  async createUser(name: string, email: string, password: string, phone: string) {
-    const user = new User(name, email, password, phone);
+  async createUser(name: string, email: string, password: string) {
+    const user = new User(name, email, password);
     
     return await this.repo.save(user);
   }

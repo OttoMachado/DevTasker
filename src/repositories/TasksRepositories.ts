@@ -1,12 +1,12 @@
 import { AppDataSource } from "../data-source";
-import { Task } from "../models/Tasks";
+import { Tasks } from "../models/Tasks";
 
 export class TaskRepository {
-  private repo = AppDataSource.getRepository(Task);
+  private repo = AppDataSource.getRepository(Tasks);
 
   //Cria a tarefa
   async createTask(title: string, description: string, status: string, deliveryDate: string, userId: number) {
-    const task = new Task(title, description, status, deliveryDate, userId);
+    const task = new Tasks(title, description, status, deliveryDate, userId);
     return await this.repo.save(task);
   }
 
@@ -27,7 +27,7 @@ export class TaskRepository {
   }
 
   // Esse da update na task
-  async updateTask(id: number, fields: Partial<Task>) {
+  async updateTask(id: number, fields: Partial<Tasks>) {
     const task = await this.findTaskById(id);
     if (!task) return null;
     Object.assign(task, fields);

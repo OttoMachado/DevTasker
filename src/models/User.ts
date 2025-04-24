@@ -12,7 +12,7 @@ export class User {
   @Column({ type: "varchar", length: 100, nullable: false })
   password: string;
 
-  @Column({ type: "varchar", length: 30, nullable: false })
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   creationDate: string;
 
   @Column({ type: "varchar", length: 50, nullable: false })
@@ -21,10 +21,9 @@ export class User {
   @OneToMany(() => Tasks, (task)  => task.user)   //OneToMany do Tasks pra User
   tasks: Tasks[];
 
-  constructor(name : string, email: string, creationDate: string, password: string){
+  constructor(name : string, email: string, password: string){
     this.name = name;
     this.email = email;
-    this.creationDate = creationDate
     this.password = password
   }
 }

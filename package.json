@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/server.ts"
+    "dev": "ts-node-dev src/server.ts",
+    "migrate": "typeorm migration:run -d src/data-source.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "typeorm": "^0.3.22"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.1",
